@@ -1,0 +1,34 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row mt-3">
+    <div class="col-6 offset-2">
+        <br /><br />
+        <h3>Edit Slot</h3>
+        <form method="POST" action="/slots/<%= slot._id %>?_method=PUT" novalidate class="needs-validation">
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                <input name="slot[date]" value="<%= slot.date.toISOString().split('T')[0] %>" type="date" class="form-control" required />
+                <div class="invalid-feedback">
+                    Please select a date.
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label for="startTime" class="form-label">Start Time</label>
+                    <input name="slot[startTime]" value="<%= slot.startTime %>" type="time" class="form-control" required />
+                    <div class="invalid-feedback">
+                        Start Time is required.
+                    </div>
+                </div>
+                <div class="mb-3 col-md-4">
+                        <label for="endTime" class="form-label">End Start</label>
+                        <input name="slot[endTime]" value="<%= slot.endTime %>" type="time" class="form-control" required />
+                        <div class="invalid-feedback">
+                            End Time is required.
+                        </div>
+                    </div>
+            </div>
+            <button class="btn btn-dark edit-btn mt-3">Edit</button>
+        </form>
+    </div>
+</div>
+<script src="/js/script.js"></script>

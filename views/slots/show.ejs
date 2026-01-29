@@ -1,0 +1,127 @@
+<% layout("/layouts/boilerplate") %>
+<%
+  function formatTime(time) {
+    let [hours, minutes] = time.split(":");
+    hours = parseInt(hours);
+
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+
+    return `${hours}:${minutes} ${ampm}`;
+  }
+%>
+
+    <h3 class="card-title text-center mb-4 mt-3">
+                        Slot Details
+    </h3>
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+     
+                    <!-- Date -->
+                    <p class="text-center fw-bold">
+                        <i class="fa-regular fa-calendar"></i> &nbsp;
+                        Date: &nbsp; <%= slot.date.toDateString() %>
+                    </p>
+
+                    <!-- Time -->
+                    <p class="text-center">
+                        <i class="fa-regular fa-clock"></i>
+                        <strong>Time : <%= formatTime(slot.startTime) %></strong>
+                        -
+                        <strong><%= formatTime(slot.endTime) %></strong>
+                    </p>
+
+                    <p class="text-center">Created By: 
+                        <i><%= slot.createdBy ? slot.createdBy.username : "Admin" %></i>
+                    </p>
+
+                    <% if(slot.isBooked && slot.bookedBy) { %>
+                        <p class="text-center">Booked By: 
+                            <i><%= slot.bookedBy.username %></i>
+                        </p>
+                    <% } %>
+                    
+        
+
+
+                    <!-- Status -->
+
+                    <div>
+                        <p class="text-center">
+                            Status:
+                            <span class="badge <%= slot.isBooked ? 'bg-danger' : 'bg-success' %>">
+                                <%= slot.isBooked ? 'Booked' : 'Available' %>
+                            </span>
+                        
+                        </p>
+
+                          
+ 
+                    <hr>
+
+                    <!---Actions-->
+
+
+                    <div class="d-flex justify-content-between">
+             
+                        <% if (currUser && currUser.role === "admin") { %>
+                        <a href="/slots/<%= slot._id %>/edit"
+                           class="btn btn-dark btn-primary mt-3 ">
+                            Edit Slot
+                        </a>
+
+                        <form method="POST"
+                              action="/slots/<%= slot._id %>?_method=DELETE">
+                            <button class="btn btn-dark btn-danger delete-btn mt-3">
+                                Delete 
+                            </button>
+       
+
+                        </form>
+                        <% } %>
+                    </div>
+
+                    <div>
+                        <% if (currUser && currUser.role === "student" && !slot.isBooked) { %>
+                            <form action="/slots/<%= slot._id %>/book" method="POST">
+                                <button class="btn btn-dark btn-success mt-3 ">Confirm Slot</button>
+                            </form>
+           
+                        <% } %>
+
+                        <% if (slot.isBooked && (!currUser || currUser.role !== "admin")) { %>
+                            <span class="btn btn-outline-danger mt-2 disabled">
+                                Slot Booked
+                            </span>
+                        <% } %>
+
+                        
+                        <% if (
+                                currUser &&
+                                slot.isBooked &&
+                                slot.bookedBy &&
+                                slot.bookedBy.equals(currUser._id)
+                                ) { %>
+                                <form action="/slots/<%= slot._id %>/cancel" method="POST">
+                                    <button class="btn btn-dark btn-warning mt-3">Cancel</button>
+                                </form>
+                        <% } %>
+                    </div>
+
+                    </div>
+
+                    
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,41 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row">
+    <div class="col-6 offset-2">
+    <br /><br />
+    
+    <h3>Create a New Slot</h3>
+    <form method="POST" action="/slots"  class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input name="slot[date]" placeholder="Add Date" type="date" class="form-control" required>
+            <div class="invalid-feedback">
+                Please select a date.
+              </div>
+        </div>
+
+       <div class="row">
+            <div class="mb-3 col-md-6">
+                <label for="startTime" class="form-label">Start Time</label>
+                <input name="slot[startTime]" placeholder="Add Start Time" type="time" class="form-control" required>
+                <div class="invalid-feedback">
+                Start Time is required.
+              </div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <label for="endTime" class="form-label">End Start</label>
+                <input name="slot[endTime]" placeholder="Add End Time" type="time" class="form-control" required>
+                <div class="invalid-feedback">
+                End Time is required.
+              </div>
+            </div>
+
+       </div>
+      
+        <br />
+        <button class="btn btn-dark add-btn" type="submit">Add</button>
+    </form>
+     
+    </div>
+</div>
+<script src="/js/script.js"></script>

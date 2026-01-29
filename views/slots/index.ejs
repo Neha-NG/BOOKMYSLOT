@@ -1,0 +1,73 @@
+<% layout("/layouts/boilerplate") %> 
+    <!-- <h3>All Slots</h3> -->
+    <!-- <form method="GET"  action="/slots/new">
+        <button>Create New Slot</button>
+    </form> -->
+  
+<%
+  function formatTime(time) {
+    let [hours, minutes] = time.split(":");
+    hours = parseInt(hours);
+
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+
+    return `${hours}:${minutes} ${ampm}`;
+  }
+%>
+
+
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">Available Slots</h2>
+
+<div class="slots-wrapper">
+  <div class="row g-4 slots-scroll">
+      <%  for(let slot of allSlots) {  %>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 slot-card" >
+          <div class="card-body">
+            
+            <h5 class="card-title">
+              <b><i class="fa-regular fa-calendar"></i>&nbsp;<%= slot.date.toDateString() %> </b><br />
+            </h5>
+
+            <p class="card-text">
+              <i class="fa-regular fa-clock"></i>&nbsp;&nbsp;
+              <strong><%= formatTime(slot.startTime) %></strong> - 
+              <strong><%= formatTime(slot.endTime) %></strong>
+            </p>
+
+            
+
+            <% if (slot.isBooked) { %>
+              <span class="badge bg-danger">Booked</span>
+            <% } else { %>
+              <span class="badge bg-success">Available</span>
+            <% } %>
+          </div>
+
+          <div class="card-footer bg-white">
+            <% if (!slot.isBooked) { %>
+              <a href="/slots/<%= slot._id %>" class="btn btn-primary w-100">
+                Book Slot
+              </a>
+            <% } else { %>
+                <a href="/slots/<%= slot._id %>" class="btn btn-danger">
+                  Slot Booked
+                </a>
+            <% } %>
+
+          </div>
+        </div>
+      </div>
+
+     <% } %>
+  </div>
+  </div>
+</div>
+
+
+
+
+
