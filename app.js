@@ -169,14 +169,16 @@ app.get("/make-admin/:id", isLoggedIn, isAdmin, async (req, res) => {
 
 // });
 
+app.get("/", (req, res) => {
+    res.redirect("/slots");
+});
+
 app.use("/slots", slotRouter);
 app.use("/", userRouter);
 
 // app.get("/", (req, res) => {
 //     res.send("Server OK");
 // });
-
-
 
 
 // app.get("/testSlot", async (req, res) => {
