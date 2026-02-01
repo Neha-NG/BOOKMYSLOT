@@ -90,10 +90,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStartegy(User.authenticate()));
 
-//Store & Unstore Methods
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
 
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
@@ -101,6 +97,12 @@ app.use((req, res, next) => {
     res.locals.currUser = req.user;
     next();
 });
+
+//Store & Unstore Methods
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 
 // app.use((req, res, next) => {
 //     res.locals.currUser = req.user;
